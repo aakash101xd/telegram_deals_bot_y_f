@@ -1,0 +1,27 @@
+name: Deal Scraper Bot
+on:
+  schedule:
+    - cron: '0 */1 * * *' # Runs every hour
+  workflow_dispatch:
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run Script
+        env:
+          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          AMAZON_TRACKING_ID: ${{ secrets.AMAZON_TRACKING_ID }}
+        run: python scraper.py
+      - name: Save memory
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: "posted_links.json"
