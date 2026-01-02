@@ -20,6 +20,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           AMAZON_TRACKING_ID: ${{ secrets.AMAZON_TRACKING_ID }}
+          AMAZON_TRACKING_ID_2: ${{ secrets.AMAZON_TRACKING_ID_2 }} # Added this
         run: python scraper.py
       - name: Save memory
         uses: stefanzweifel/git-auto-commit-action@v5
